@@ -1,15 +1,14 @@
-import matplotlib
+import numpy as np
 import sympy
+import matplotlib.pyplot as plt
 
-x, y, z, t = sympy.symbols("x y z t")
+x,y,z = np.meshgrid(np.linspace(-5,5,20),np.linspace(-5,5,20),np.linspace(-5,5,20))
 
-func = x**2 + sympy.cos(y)
+u = x/np.sqrt(x**2 + y**2 + z**2)
+v = y/np.sqrt(x**2 + y**2 + z**2)
+k = z/np.sqrt(x**2 + y**2 + z**2)
 
-derivate_x = sympy.diff(x)
-derivate_y = sympy.diff(y)
+ax = plt.figure().add_subplot(projection='3d')
 
-
-print(final_func)
-
-sympy.plotting.plot3d(final_func)
- 
+ax.quiver(x,y,z,u,v,k,length=0.1, normalize=True)
+plt.show()
