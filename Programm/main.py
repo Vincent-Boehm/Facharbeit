@@ -11,7 +11,8 @@ a,b,c = sympy.symbols("a b c")
 sympy.init_printing(use_unicode=True)
 
 #Base function to describe the field
-f_e = sympy.log(a*b*c)
+f_e = -sympy.sin(a) * -sympy.cos(b) + c
+
 
 
 #Take the Diffrential to A
@@ -34,8 +35,6 @@ v = v_func(x, y, z)
 
 ax = plt.figure().add_subplot(111,projection='3d')
 
-print(u)
-
 M = np.sqrt(u**2 + v**2 + k**2)
 
 
@@ -46,8 +45,8 @@ qq=plt.quiver(x,y,z,u,v,k,length=0.1,cmap=cmap,normalize=True,)
 
 plt.colorbar(qq, cmap=plt.cm.jet)
 
-plt.show()
+#plt.show()
 
-#plt.ioff()
+plt.ioff()
 
-#plt.savefig("05.02.2024.png")
+plt.savefig("./images/sin7.png")
