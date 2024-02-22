@@ -8,3 +8,16 @@ a/(sympy.sqrt(b**2 + c**2 + a**2)) + b/(sympy.sqrt(b**2 + c**2 + a**2)) + c/(sym
 
 Magnetic 
 sympy.cos(a) * b * c
+
+
+
+NEW
+
+1
+
+f_e_x = sympy.sin(np.pi * a) * sympy.cos(np.pi * b) 
+f_e_y = -sympy.cos(np.pi * a) * sympy.sin(np.pi * b)
+
+f_e_z = c**2
+
+2

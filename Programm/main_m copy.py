@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 import sympy
 import numpy as np
 
-x,y,z = np.meshgrid(np.linspace(10,-10,20),np.linspace(10,-10,20),np.linspace(10,-10,3))
+x,y,z = np.meshgrid(np.linspace(10,-10,20),np.linspace(10,-10,20),np.linspace(10,-10,20))
 
 a,b,c = sympy.symbols("a b c ")
 
 sympy.init_printing(use_unicode=True)
 
 #Base function to describe the field
-f_a_x = -1/(a**2 + b**2 + c**2)
-f_a_y = -1/(a**2 + b**2 + c**2)
-f_a_z = -1/(a**2 + b**2 + c**2)
+f_a_x = a/(a**2 + b**2 + c**2)
+f_a_y = b/(a**2 + b**2 + c**2)
+f_a_z = c/(a**2 + b**2 + c**2)
 
 
 f_a_x_d = sympy.diff(f_a_x,a)
@@ -52,11 +52,9 @@ J = sympy.Matrix([
 
 J_x_func = sympy.lambdify((a,b,c), J[0], "numpy")
 J_y_func = sympy.lambdify((a,b,c), J[1], "numpy")
-J_z_func = sympy.lambdify((a,b,c), J[2], "numpy")
 
 J_X = J_x_func(x,y,z)
 J_Y = J_y_func(x,y,z)
-J_Z = J_z_func(x,y,z)
 print(J)
 
 
@@ -65,21 +63,21 @@ k_e = f_e_y_func(x,y,z)
 v_e = f_e_z_func(x,y,z)
 
 
-fig, axs = plt.subplots(2, 1,figsize=(10, 10),subplot_kw={'projection': '3d'})
+fig, axs = plt.subplots(2, 1,figsize=(10, 10))
 
-M1 = np.sqrt(u_e ** 2 + k_e**2)
+M1 = np.sqrt(u_e[:,:,0] ** 2 + k_e[:,:,0]**2)
 
 
-M2 = np.sqrt(J_X ** 2 + J_Y**2)
+M2 = np.sqrt(J_X[:,:,0] ** 2 + J_Y[:,:,0]**2)
 
 
 # Plot the quiver plot in the first subplot
-qq = axs[0].quiver(x,y,z,u_e,k_e,v_e,normalize=True)
+qq = axs[0].quiver(x[:,:,0],y[:,:,0],u_e[:,:,0],k_e[:,:,0], M1, cmap=plt.cm.jet)
 axs[0].set_title("Magnetisches Feld") 
 cbar_qq = plt.colorbar(qq, ax=axs[0])
 
 #Plot the contour plot in the second subplot
-pp = axs[1].quiver(x,y,z,J_X,J_Y,J_Z,normalize=True)
+pp = axs[1].quiver(x[:,:,0],y[:,:,0],J_X[:,:,0],J_Y[:,:,0],M2 ,cmap=plt.cm.jet)
 axs[1].set_title('Elektrischer Fluss')
 cbar_pp = plt.colorbar(pp, ax=axs[1])
 
